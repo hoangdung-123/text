@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Xúc Xắc A/B</title>
+  <style>
+    body {
+      background-image: url('nhii.png'); /* Đảm bảo bạn có ảnh background.png trong thư mục */
+      background-size: cover; /* Làm hình nền phủ toàn bộ trang */
+      background-position: center;
+      background-repeat: no-repeat;
+      font-family: Arial;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    img {
+      width: 100px;
+      margin: 10px;
+    }
+
+    .choice-btn {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 16px;
+    }
+
+    #result {
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Chọn tài hoặc xĩu</h1>
+
+  <button class="choice-btn" onclick="choose('Tài')">Chọn tài</button>
+  <button class="choice-btn" onclick="choose('Xĩu')">Chọn xỉu</button>
+
+  <h2>Bạn chọn: <span id="choice">?</span></h2>
+
+  <div>
+    <img id="dice1" src="game1.png">
+    <img id="dice2" src="game1.png">
+    <img id="dice3" src="game1.png">
+  </div>
+
+  <button class="choice-btn" onclick="rollDice()">Tung xúc xắc</button>
+
+  <div id="score">Tổng điểm: ?</div>
+  <div id="result"></div>
+
+  <script>
+    let playerChoice = "";
+
+    function choose(option) {
+      playerChoice = option;
+      document.getElementById("choice").innerText = option;
+      document.getElementById("result").innerText = "";
+      document.getElementById("score").innerText = "Tổng điểm: ?";
+    }
+
+    function rollDice() {
+      if (!playerChoice) {
+        alert("Vui lòng chọn xĩu hoặc tài trước!");
+        return;
+      }
+
+      let total = 0;
+      for (let i = 1; i <= 3; i++) {
+        let num = Math.floor(Math.random() * 6) + 1;
+        total += num;
+        document.getElementById(`dice${i}`).src = `game${num}.png`;
+      }
+
+      document.getElementById("score").innerText = `Tổng điểm: ${total}`;
+
+      if ((playerChoice === "TàiTài" && total >= 11) || 
+          (playerChoice === "XĩuXĩu" && total <= 10)) {
+        document.getElementById("result").innerText = "Húp Húp!";
+        document.getElementById("result").style.color = "green";
+      } else {
+        document.getElementById("result").innerText = "+1 thằng ngu";
+        document.getElementById("result").style.color = "red";
+      }
+    }
+  </script>
+
+</body>
+</html>
